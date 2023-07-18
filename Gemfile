@@ -27,7 +27,6 @@ gem "puma", ">= 5.0"
 gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
 
 gem "rss"
-gem "open-uri"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_07_17_153626) do
+ActiveRecord::Schema[7.1].define(version: 2023_07_18_083722) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,10 +25,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_07_17_153626) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
-    t.string "link"
     t.string "rss_link"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "last_article"
   end
 
   add_foreign_key "articles", "authors"

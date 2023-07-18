@@ -3,16 +3,16 @@ require 'open-uri'
 
 class ApplicationController < ActionController::API
     def scrap_rss(rss_link)
-        if Author.find_by_link(rss_link)
-            author = Author.find_by_link(rss_link)
+        if Author.find_by_rss_link(rss_link)
+            author = Author.find_by_rss_link(rss_link)
             URI.open(rss_link) do |rss|
                 feed = RSS::Parser.parse(rss)
         
                 items = feed.feed_type === 'atom' ? feed.entries : feed.channel.items
-                latest_index = items.find_index { |item| (get_title(item, feed.feed_type).include?(author.articles.last.title))}
                 
-                if !latest_index.nil? && latest_index > 0
-        
+                latest_index = items.find_index { |item| (get_title(item, feed.feed_type).include?(author.last_article))}
+
+                if !latest_index.nil? && latest_index > 0        
                     items[0 .. latest_index - 1].each do |item|
                     author.articles.create(title: get_title(item, feed.feed_type).strip, link: get_link(item, feed.feed_type).strip)
                     end
@@ -23,8 +23,8 @@ class ApplicationController < ActionController::API
                 feed = RSS::Parser.parse(rss)
                 if feed
                     author_name = feed.feed_type === 'atom' ? feed.title.content.strip : feed.channel.title.strip
-                    author = Author.create(name: author_name, rss_link: rss_link)
                     items = feed.feed_type === 'atom' ? feed.entries : feed.channel.items
+                    author = Author.create(name: author_name, rss_link: rss_link, last_article: get_title(items[0], feed.feed_type))
                     author.articles.create(title: get_title(items[0], feed.feed_type), link: get_link(items[0], feed.feed_type))
                 end
             end
