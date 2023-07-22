@@ -5,31 +5,24 @@ application_controller = ApplicationController.new
 rss_items = [
     {
         url: 'https://martinfowler.com/feed.atom',
-        latest_article: "Linking Modular Architecture to Development Teams",
     },
     {
         url: 'http://www.aaronsw.com/2002/feeds/pgessays.rss',
-        latest_article: "How to Get New Ideas",
     },
     {
         url: 'https://www.developerway.com/rss.xml',
-        latest_article: 'Refs in React: from access to DOM to imperative API'
     },
     {
         url: 'https://world.hey.com/jason/feed.atom',
-        latest_article: 'Rescuing a project in progress'
     },
     {
         url: 'https://world.hey.com/dhh/feed.atom',
-        latest_article: 'Staying in the arena'
     },
     {
         url: 'https://www.joelonsoftware.com/feed/',
-        latest_article: 'Kinda a big announcement'
     },
     {
         url: 'https://sive.rs/en.atom',
-        latest_article: 'Curve into the target'
     }
 ]
 
