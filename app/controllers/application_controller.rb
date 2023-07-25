@@ -17,6 +17,7 @@ class ApplicationController < ActionController::API
                     author.articles.create(title: get_title(item, feed.feed_type).strip, link: get_link(item, feed.feed_type).strip)
                     end
                 end
+                author.update(last_article: get_title(items[0], feed.feed_type).strip)
             end
         else
             URI.open(rss_link) do |rss|
@@ -41,7 +42,25 @@ class ApplicationController < ActionController::API
             end
         }
     end
-    
+
+    def delete
+        if params[:id] 
+            article = Article.find(params[:id])
+            if article.present?
+                if article.destroy
+                    render json: {
+                        message: 'Article deleted Successfully'
+                    }
+                else 
+                    render json: {
+                        message: 'Something went wrong'
+                    }
+                end
+            end
+        end 
+    end
+
+
     # to exclude the string from item title or link
     def get_title(item, feed_type)
         if feed_type == 'atom'
