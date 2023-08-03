@@ -7,7 +7,7 @@ class ApplicationController < ActionController::API
             author = Author.find_by_rss_link(rss_link)
             URI.open(rss_link) do |rss|
                 feed = RSS::Parser.parse(rss)
-        
+
                 items = feed.feed_type === 'atom' ? feed.entries : feed.channel.items
                 
                 latest_index = items.find_index { |item| (get_title(item, feed.feed_type).include?(author.last_article))}
